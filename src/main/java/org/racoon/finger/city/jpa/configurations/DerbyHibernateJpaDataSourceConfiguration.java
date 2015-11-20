@@ -7,12 +7,27 @@ import org.springframework.stereotype.Component;
  * created by long, created on Nov 20, 2015
  */
 @Component
-@ConfigurationProperties(locations = "classpath:datasource_derby.properties", prefix = "datasource")
+@ConfigurationProperties(locations = "classpath:derby/datasource.properties", prefix = "datasource")
 public class DerbyHibernateJpaDataSourceConfiguration {
 
-	public String test;
 
-	public DerbyDataSourceConfiguration derby;
+	private DerbyDataSourceConfiguration derby;
 
-	public HibernateJpaConfiguration hibernate;
+	private HibernateJpaConfiguration hibernate;
+
+	public DerbyDataSourceConfiguration getDerby() {
+		return derby;
+	}
+
+	public void setDerby(DerbyDataSourceConfiguration derby) {
+		this.derby = derby;
+	}
+
+	public HibernateJpaConfiguration getHibernate() {
+		return hibernate;
+	}
+
+	public void setHibernate(HibernateJpaConfiguration hibernate) {
+		this.hibernate = hibernate;
+	}
 }

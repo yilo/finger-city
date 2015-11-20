@@ -1,5 +1,6 @@
 package org.racoon.finger.city.jpa.utils;
 
+import javax.persistence.EntityManagerFactory;
 import javax.sql.DataSource;
 
 import org.springframework.orm.jpa.JpaTransactionManager;
@@ -21,9 +22,9 @@ public class DataBaseUtils {
 		return em;
 	}
 
-	public static PlatformTransactionManager createTransactionManager(LocalContainerEntityManagerFactoryBean entityManagerFactory) {
+	public static PlatformTransactionManager createTransactionManager(EntityManagerFactory entityManagerFactory) {
 		JpaTransactionManager tm = new JpaTransactionManager();
-		tm.setEntityManagerFactory(entityManagerFactory.getObject());
+		tm.setEntityManagerFactory(entityManagerFactory);
 		return tm;
 	}
 

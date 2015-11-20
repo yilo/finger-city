@@ -6,9 +6,33 @@ package org.racoon.finger.city.jpa.configurations;
 
 public class HibernateJpaConfiguration extends JpaConfiguration {
 
-	public String schema;
-	public boolean showSql;
-	public String database;
-	public String entityPackageName;
+	private String schema;
+	private boolean showSql;
+	private String database;
+	private String entityPackageName;
+	public String getSchema() {
+		return schema;
+	}
+	public void setSchema(String schema) {
+		this.schema = schema;
+	}
+	public boolean isShowSql() {
+		return showSql;
+	}
+	public void setShowSql(boolean showSql) {
+		this.showSql = showSql;
+	}
+	public String getDatabase() {
+		return database;
+	}
+	public void setDatabase(String database) {
+		this.database = database;
+	}
+	public String getEntityPackageName() {
+		return entityPackageName;
+	}
+	public void setEntityPackageName(String entityPackageName) {
+		this.entityPackageName = entityPackageName;
+	}
 
 }

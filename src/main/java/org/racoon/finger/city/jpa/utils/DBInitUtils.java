@@ -16,14 +16,20 @@ public class DBInitUtils {
 	@Autowired
 	DerbyFactory derbyFactory;
 
-	@Bean
-	public LocalContainerEntityManagerFactoryBean getLocalContainerEntityManagerFactoryBean() throws Exception {
-		return DataBaseUtils.createEntityManagerFactory(derbyFactory.getDataSource(), derbyFactory.getJpaAdapter(),
-				derbyFactory.getEntityPackageName());
-	}
+	private LocalContainerEntityManagerFactoryBean localContainerEntityManagerFactoryBean;
 
 	@Bean
-	public PlatformTransactionManager getPlatformTransactionManager() throws Exception {
-		return DataBaseUtils.createTransactionManager(getLocalContainerEntityManagerFactoryBean());
+	public LocalContainerEntityManagerFactoryBean entityManagerFactory() throws Exception {
+		if (localContainerEntityManagerFactoryBean == null)
+			localContainerEntityManagerFactoryBean = DataBaseUtils.createEntityManagerFactory(
+					derbyFactory.getDataSource(), derbyFactory.getJpaAdapter(), derbyFactory.getEntityPackageName());
+		return localContainerEntityManagerFactoryBean;
+	}
+
+
+
+	@Bean
+	public PlatformTransactionManager transactionManager() throws Exception {
+		return DataBaseUtils.createTransactionManager(entityManagerFactory().getObject());
 	}
 }

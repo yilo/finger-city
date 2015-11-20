@@ -6,29 +6,31 @@ import javax.persistence.Id;
 import javax.persistence.Table;
 
 import org.joda.time.LocalDateTime;
+import org.racoon.finger.city.jpa.models.Address;
+import org.racoon.finger.city.jpa.models.Contact;
+import org.racoon.finger.city.jpa.models.Description;
 
-/**
- * created by long, created on Nov 20, 2015
- */
 @Entity
-@Table(name = "T_Users")
-public class User {
-
+@Table(name = "T_Provider")
+public class Provider  {
 	@Id
-	@Column(name = "userId")
-	public int userId;
+	@Column(name = "providerId")
+	public int providerId;
 
-	@Column(name = "userName")
-	public String userName;
-
-	@Column(name = "userType")
-	public int userType;
+	@Column(name = "providerName")
+	public String providerName;
 
 	@Column(name = "email")
 	public String email;
 
 	@Column(name = "IsVerified")
 	public int isVerifed;
+	
+	public transient Address address;
+	
+	public transient Description description;
+	
+	public transient Contact contact;
 
 	@Column(name = "createdOn")
 	public LocalDateTime createdOn;

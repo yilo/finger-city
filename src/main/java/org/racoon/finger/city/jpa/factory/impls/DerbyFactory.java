@@ -5,7 +5,6 @@ import javax.sql.DataSource;
 import org.racoon.finger.city.jpa.configurations.DerbyHibernateJpaDataSourceConfiguration;
 import org.racoon.finger.city.jpa.factory.DataSourceFactory;
 import org.racoon.finger.city.jpa.factory.HibernateConfigFactory;
-import org.racoon.finger.city.jpa.utils.EncryptUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.orm.jpa.vendor.Database;
 import org.springframework.orm.jpa.vendor.HibernateJpaVendorAdapter;
@@ -23,28 +22,30 @@ public class DerbyFactory implements DataSourceFactory, HibernateConfigFactory {
 	DerbyHibernateJpaDataSourceConfiguration config;
 
 	public String getEntityPackageName() {
-		return config.hibernate.entityPackageName;
+		return config.getHibernate().getEntityPackageName();
 	}
 
 	@Override
 	public HibernateJpaVendorAdapter getJpaAdapter() {
 		HibernateJpaVendorAdapter hJpa = new HibernateJpaVendorAdapter();
-		hJpa.setShowSql(config.hibernate.showSql);
-		hJpa.setDatabase(Database.valueOf(config.hibernate.database));
+		hJpa.setShowSql(config.getHibernate().isShowSql());
+		hJpa.setDatabase(Database.valueOf(config.getHibernate().getDatabase()));
 		hJpa.getJpaPropertyMap().put(HibernateConfigFactory.HIBERNATE_DDL_AUTO_KEY, "validate");
-		hJpa.getJpaPropertyMap().put(HibernateConfigFactory.HIBERNATE_SCHEMA_KEY, config.hibernate.schema);
+		hJpa.getJpaPropertyMap().put(HibernateConfigFactory.HIBERNATE_SCHEMA_KEY, config.getHibernate().getSchema());
 		return hJpa;
 	}
 
 	@Override
 	public DataSource getDataSource() throws Exception {
 		ComboPooledDataSource cpds = new ComboPooledDataSource();
-		cpds.setJdbcUrl(config.derby.url);
-		cpds.setDriverClass(config.derby.driverName);
-		cpds.setUser(config.derby.user);
-		cpds.setPassword(EncryptUtils.decrypt(config.derby.pwd));
-		cpds.setMinPoolSize(config.derby.minPoolSize);
-		cpds.setMaxPoolSize(config.derby.maxPoolSize);
+		cpds.setJdbcUrl(config.getDerby().getUrl());
+		cpds.setDriverClass(config.getDerby().getDriverName());
+		cpds.setUser(config.getDerby().getUser());
+		cpds.setPassword(config.getDerby().getPwd());
+		cpds.setMinPoolSize(config.getDerby().getMinPoolSize());
+		cpds.setMaxPoolSize(config.getDerby().getMaxPoolSize());
+		String derbyHome = System.getProperty("user.home") + System.getProperty("file.separator") + "derby";
+		System.setProperty("derby.system.home", derbyHome);
 		return cpds;
 	}
 
