@@ -6,7 +6,7 @@ import org.bouncycastle.crypto.params.KeyParameter;
 import org.bouncycastle.util.encoders.Base64;
 
 /**
- * created by f560415, created on Nov 20, 2015
+ * created by long, created on Nov 20, 2015
  */
 public class EncryptUtils {
 
