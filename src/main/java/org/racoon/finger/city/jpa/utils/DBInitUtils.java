@@ -1,6 +1,9 @@
 package org.racoon.finger.city.jpa.utils;
 
-import org.racoon.finger.city.jpa.factory.impls.DerbyFactory;
+import javax.sql.DataSource;
+
+import org.racoon.finger.city.jpa.factory.DataSourceConfigFactory;
+import org.racoon.finger.city.jpa.factory.HibernateConfigFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -14,7 +17,10 @@ import org.springframework.transaction.PlatformTransactionManager;
 public class DBInitUtils {
 
 	@Autowired
-	DerbyFactory derbyFactory;
+	DataSourceConfigFactory dataSourceFactory;
+
+	@Autowired
+	HibernateConfigFactory hibernateConfigFactory;
 
 	private LocalContainerEntityManagerFactoryBean localContainerEntityManagerFactoryBean;
 
@@ -22,11 +28,15 @@ public class DBInitUtils {
 	public LocalContainerEntityManagerFactoryBean entityManagerFactory() throws Exception {
 		if (localContainerEntityManagerFactoryBean == null)
 			localContainerEntityManagerFactoryBean = DataBaseUtils.createEntityManagerFactory(
-					derbyFactory.getDataSource(), derbyFactory.getJpaAdapter(), derbyFactory.getEntityPackageName());
+					dataSourceFactory.getDataSource(), hibernateConfigFactory.getJpaAdapter(),
+					hibernateConfigFactory.getEntityPackageName());
 		return localContainerEntityManagerFactoryBean;
 	}
-
-
+	
+	@Bean
+	public DataSource dataSource() throws Exception{
+		return dataSourceFactory.getDataSource();
+	}
 
 	@Bean
 	public PlatformTransactionManager transactionManager() throws Exception {

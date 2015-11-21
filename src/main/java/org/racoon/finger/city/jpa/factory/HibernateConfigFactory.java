@@ -10,4 +10,6 @@ public interface HibernateConfigFactory {
 	String HIBERNATE_DDL_AUTO_KEY = "hibernate.hbm2ddl.auto";
 
 	HibernateJpaVendorAdapter getJpaAdapter();
+	
+	String getEntityPackageName();
 }

@@ -10,7 +10,7 @@ public interface ModelService<T> {
 
 	T findById(int id);
 	
-	int save(T t);
+
 	
 	List<T> search(List<Filter> filters);
 }

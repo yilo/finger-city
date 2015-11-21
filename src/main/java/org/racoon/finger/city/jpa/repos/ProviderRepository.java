@@ -1,9 +1,9 @@
 package org.racoon.finger.city.jpa.repos;
 
 import org.racoon.finger.city.jpa.entity.Provider;
-import org.springframework.data.repository.CrudRepository;
+import org.springframework.data.jpa.repository.JpaRepository;
 
-/** created by Long created on Nov 20, 2015 **/
-public interface ProviderRepository extends CrudRepository<Provider, Integer>{
+/** created by Long created on Nov 21, 2015 **/
+public interface ProviderRepository extends JpaRepository<Provider, Integer>{
 
 }

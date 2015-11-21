@@ -5,7 +5,7 @@ import javax.sql.DataSource;
 /**
  * created by long, created on Nov 20, 2015
  */
-public interface DataSourceFactory {
+public interface DataSourceConfigFactory {
 
 	DataSource getDataSource() throws Exception;
 }
