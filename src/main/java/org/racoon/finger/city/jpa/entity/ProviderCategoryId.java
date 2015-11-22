@@ -1,27 +1,28 @@
 package org.racoon.finger.city.jpa.entity;
 
 import java.io.Serializable;
+import java.util.UUID;
 
 /** created by Long created on Nov 21, 2015 **/
 public class ProviderCategoryId implements Serializable {
 
 	private static final long serialVersionUID = -7528499752834732994L;
-	private int providerId;
-	private int categoryId;
+	private UUID providerId;
+	private UUID categoryId;
 
-	public int getCategoryId() {
+	public UUID getCategoryId() {
 		return categoryId;
 	}
 
-	public void setCategoryId(int categoryId) {
+	public void setCategoryId(UUID categoryId) {
 		this.categoryId = categoryId;
 	}
 
-	public int getProviderId() {
+	public UUID getProviderId() {
 		return providerId;
 	}
 
-	public void setProviderId(int providerId) {
+	public void setProviderId(UUID providerId) {
 		this.providerId = providerId;
 	}
 }

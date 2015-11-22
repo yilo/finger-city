@@ -70,6 +70,7 @@ public class DataSourceConfigFactoryImpl implements DataSourceConfigFactory {
 
 	@Override
 	public DataSource getDataSource() throws Exception {
+
 		ComboPooledDataSource cpds = new ComboPooledDataSource();
 		cpds.setJdbcUrl(getUrl());
 		cpds.setDriverClass(getDriverName());

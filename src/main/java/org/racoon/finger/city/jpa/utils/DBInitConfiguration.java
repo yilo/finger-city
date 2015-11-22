@@ -14,7 +14,7 @@ import org.springframework.transaction.PlatformTransactionManager;
  * created by long, created on Nov 20, 2015
  */
 @Configuration
-public class DBInitUtils {
+public class DBInitConfiguration {
 
 	@Autowired
 	DataSourceConfigFactory dataSourceFactory;
@@ -23,23 +23,33 @@ public class DBInitUtils {
 	HibernateConfigFactory hibernateConfigFactory;
 
 	private LocalContainerEntityManagerFactoryBean localContainerEntityManagerFactoryBean;
+	private DataSource dataSource;
+
+	private DataSource _getDataSource() throws Exception {
+		if (dataSource == null)
+			dataSource = dataSourceFactory.getDataSource();
+		return dataSource;
+	}
+
+	private LocalContainerEntityManagerFactoryBean _getEntityManagerFactory() throws Exception {
+		if (localContainerEntityManagerFactoryBean == null)
+			localContainerEntityManagerFactoryBean = DataBaseUtils.createEntityManagerFactory(_getDataSource(),
+					hibernateConfigFactory.getJpaAdapter(), hibernateConfigFactory.getEntityPackageName());
+		return localContainerEntityManagerFactoryBean;
+	}
 
 	@Bean
 	public LocalContainerEntityManagerFactoryBean entityManagerFactory() throws Exception {
-		if (localContainerEntityManagerFactoryBean == null)
-			localContainerEntityManagerFactoryBean = DataBaseUtils.createEntityManagerFactory(
-					dataSourceFactory.getDataSource(), hibernateConfigFactory.getJpaAdapter(),
-					hibernateConfigFactory.getEntityPackageName());
-		return localContainerEntityManagerFactoryBean;
+		return _getEntityManagerFactory();
 	}
-	
+
 	@Bean
-	public DataSource dataSource() throws Exception{
-		return dataSourceFactory.getDataSource();
+	public DataSource dataSource() throws Exception {
+		return _getDataSource();
 	}
 
 	@Bean
 	public PlatformTransactionManager transactionManager() throws Exception {
-		return DataBaseUtils.createTransactionManager(entityManagerFactory().getObject());
+		return DataBaseUtils.createTransactionManager(_getEntityManagerFactory().getObject());
 	}
 }

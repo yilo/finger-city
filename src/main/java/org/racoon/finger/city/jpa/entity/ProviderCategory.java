@@ -1,5 +1,7 @@
 package org.racoon.finger.city.jpa.entity;
 
+import java.util.UUID;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
@@ -14,27 +16,27 @@ import javax.persistence.Table;
 public class ProviderCategory {
 	@Id
 	@Column(name = "providerId")
-	private int providerId;
+	private UUID providerId;
 	@Id
 	@Column(name = "categoryId")
-	private int categoryId;
+	private UUID categoryId;
 
 	@Column(name = "status", columnDefinition = "CHAR(1)")
 	private String status;
 
-	public int getProviderId() {
+	public UUID getProviderId() {
 		return providerId;
 	}
 
-	public void setProviderId(int providerId) {
+	public void setProviderId(UUID providerId) {
 		this.providerId = providerId;
 	}
 
-	public int getCategoryId() {
+	public UUID getCategoryId() {
 		return categoryId;
 	}
 
-	public void setCategoryId(int categoryId) {
+	public void setCategoryId(UUID categoryId) {
 		this.categoryId = categoryId;
 	}
 

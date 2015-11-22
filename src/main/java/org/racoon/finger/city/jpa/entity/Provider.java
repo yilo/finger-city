@@ -2,21 +2,15 @@ package org.racoon.finger.city.jpa.entity;
 
 import java.io.Serializable;
 import java.sql.Timestamp;
-import java.util.Set;
+import java.util.UUID;
 
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.JoinTable;
-import javax.persistence.ManyToMany;
 import javax.persistence.Table;
 
-import com.google.common.collect.Sets;
+import org.hibernate.annotations.GenericGenerator;
 
 @Entity
 @Table(name = "t_provider")
@@ -25,9 +19,10 @@ public class Provider implements Serializable {
 	private static final long serialVersionUID = -297246741580414543L;
 
 	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@GeneratedValue(generator = "uuid2")
+	@GenericGenerator(name = "uuid2", strategy = "uuid2")
 	@Column(name = "providerId")
-	private int providerId;
+	private UUID providerId;
 	@Column(name = "providerName")
 	private String providerName;// company name
 	@Column(name = "email")
@@ -45,26 +40,26 @@ public class Provider implements Serializable {
 	@Column(name = "status", columnDefinition = "bit(1)")
 	private Boolean status = true;
 
-	@ManyToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-	@JoinTable(name = "t_provider_address", joinColumns = { @JoinColumn(name = "providerId") }, inverseJoinColumns = {
-			@JoinColumn(name = "addressId") })
-	private Set<Address> addresses = Sets.newHashSet();
+	// @OneToMany(fetch = FetchType.EAGER, cascade = { CascadeType.ALL },
+	// orphanRemoval = true, mappedBy = "provider")
+	// private Set<Address> addresses = Sets.newHashSet();
+	//
+	// @OneToMany(fetch = FetchType.EAGER, cascade = { CascadeType.ALL },
+	// orphanRemoval = true, mappedBy = "provider")
+	// private Set<Contact> contacts = Sets.newHashSet();
 
-	@ManyToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-	@JoinTable(name = "t_provider_contact", joinColumns = { @JoinColumn(name = "providerId") }, inverseJoinColumns = {
-			@JoinColumn(name = "contactId") })
-	private Set<Contact> contacts = Sets.newHashSet();
+	//
+	// @ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+	// @JoinTable(name = "t_provider_category", joinColumns = { @JoinColumn(name
+	// = "providerId") }, inverseJoinColumns = {
+	// @JoinColumn(name = "categoryId") })
+	// private Set<Category> categories = Sets.newHashSet();
 
-	@ManyToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-	@JoinTable(name = "t_provider_category", joinColumns = { @JoinColumn(name = "providerId") }, inverseJoinColumns = {
-			@JoinColumn(name = "categoryId") })
-	private Set<Category> categories = Sets.newHashSet();
-
-	public int getProviderId() {
+	public UUID getProviderId() {
 		return providerId;
 	}
 
-	public void setProviderId(int providerId) {
+	public void setProviderId(UUID providerId) {
 		this.providerId = providerId;
 	}
 
@@ -124,29 +119,29 @@ public class Provider implements Serializable {
 		this.modifiedBy = modifiedBy;
 	}
 
-	public Set<Contact> getContacts() {
-		return contacts;
-	}
+	// public Set<Contact> getContacts() {
+	// return contacts;
+	// }
+	//
+	// public void setContacts(Set<Contact> contacts) {
+	// this.contacts = contacts;
+	// }
+	//
+	// public Set<Address> getAddresses() {
+	// return addresses;
+	// }
+	//
+	// public void setAddresses(Set<Address> addresses) {
+	// this.addresses = addresses;
+	// }
 
-	public void setContacts(Set<Contact> contacts) {
-		this.contacts = contacts;
-	}
-
-	public Set<Address> getAddresses() {
-		return addresses;
-	}
-
-	public void setAddresses(Set<Address> addresses) {
-		this.addresses = addresses;
-	}
-
-	public Set<Category> getCategories() {
-		return categories;
-	}
-
-	public void setCategories(Set<Category> categories) {
-		this.categories = categories;
-	}
+	// public Set<Category> getCategories() {
+	// return categories;
+	// }
+	//
+	// public void setCategories(Set<Category> categories) {
+	// this.categories = categories;
+	// }
 
 	public Boolean getStatus() {
 		return status;

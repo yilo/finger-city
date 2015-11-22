@@ -1,18 +1,16 @@
 package org.racoon.finger.city.jpa.entity;
 
 import java.io.Serializable;
-import java.util.Set;
+import java.sql.Timestamp;
+import java.util.UUID;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.ManyToMany;
 import javax.persistence.Table;
 
-import com.google.common.collect.Sets;
+import org.hibernate.annotations.GenericGenerator;
 
 @Entity
 @Table(name = "t_category")
@@ -20,9 +18,10 @@ public class Category implements Serializable {
 
 	private static final long serialVersionUID = -2796745703323475767L;
 	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@GeneratedValue(generator = "uuid2")
+	@GenericGenerator(name = "uuid2", strategy = "uuid2")
 	@Column(name = "categoryId")
-	private int categoryId;
+	private UUID categoryId;
 	@Column(name = "categoryParentId")
 	private int categoryParentId;
 	@Column(name = "categoryName")
@@ -30,16 +29,43 @@ public class Category implements Serializable {
 	@Column(name = "categoryInfo")
 	private String categoryInfo;
 	@Column(name = "status", columnDefinition = "bit(1)")
-	private Boolean status;
+	private Boolean status = true;
+	@Column(name = "createdOn")
+	private Timestamp createdOn;
+	@Column(name = "ModifiedOn", nullable = true)
+	private Timestamp modifiedOn;
+	@Column(name = "modifiedBy", nullable = true)
+	private String modifiedBy;
 
-	@ManyToMany(fetch = FetchType.LAZY, mappedBy = "categories")
-	private Set<Provider> providers = Sets.newHashSet();
+	public Timestamp getCreatedOn() {
+		return createdOn;
+	}
 
-	public int getCategoryId() {
+	public void setCreatedOn(Timestamp createdOn) {
+		this.createdOn = createdOn;
+	}
+
+	public Timestamp getModifiedOn() {
+		return modifiedOn;
+	}
+
+	public void setModifiedOn(Timestamp modifiedOn) {
+		this.modifiedOn = modifiedOn;
+	}
+
+	public String getModifiedBy() {
+		return modifiedBy;
+	}
+
+	public void setModifiedBy(String modifiedBy) {
+		this.modifiedBy = modifiedBy;
+	}
+
+	public UUID getCategoryId() {
 		return categoryId;
 	}
 
-	public void setCategoryId(int categoryId) {
+	public void setCategoryId(UUID categoryId) {
 		this.categoryId = categoryId;
 	}
 
@@ -75,11 +101,11 @@ public class Category implements Serializable {
 		this.categoryParentId = categoryParentId;
 	}
 
-	public Set<Provider> getProviders() {
-		return providers;
-	}
-
-	public void setProviders(Set<Provider> providers) {
-		this.providers = providers;
-	}
+	// public Set<Provider> getProviders() {
+	// return providers;
+	// }
+	//
+	// public void setProviders(Set<Provider> providers) {
+	// this.providers = providers;
+	// }
 }

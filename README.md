@@ -3,11 +3,12 @@
 - install mysql
 sudo apt-get update
 sudo apt-get install mysql-server
- create database fcity;
- CREATE USER 'fcity'@'0.0.0.0' IDENTIFIED BY '********';
- grant ALL on fcity.* to 'fcity'@'0.0.0.0'
- CREATE USER 'fcity'@'%' IDENTIFIED BY 'fCity1121';
- grant ALL on fcity.* to 'fcity'@'%';
+
+collation-server = utf8_unicode_ci
+init-connect='SET NAMES utf8'
+character-set-server = utf8
+
+
 - install git
 sudo apt-get install git
 - install JDK
